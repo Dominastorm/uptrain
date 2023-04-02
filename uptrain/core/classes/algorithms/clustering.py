@@ -1,23 +1,24 @@
 import numpy as np
 
-from typing import Any, List, Tuple, Union
+from typing import Any, List, Tuple, Union, Dict
 
 from uptrain.core.lib.helper_funcs import cluster_and_plot_data
 
 
 class Clustering:
-    def __init__(self, args) -> None:
+    def __init__(self, args: Dict[str, Any]) -> None:
         """
         Initializes the Clustering object with the specified arguments.
 
         Parameters
         ----------
-        args
+        args : dict
             A dictionary containing the following keys:
-                - num_buckets: the number of buckets to use when clustering
-                - is_embedding: a boolean indicating whether the data is an embedding
-                - plot_save_name: a string indicating the name of the plot file to save
-                - cluster_plot_func: a function that can be used to plot the clustering results
+                - num_buckets: int, the number of buckets to use when clustering
+                - is_embedding: bool, a flag indicating whether the data is an embedding
+                - plot_save_name: str, a string indicating the name of the plot file to save (optional)
+                - cluster_plot_func: Callable, a function that can be used to plot the clustering results (optional)
+                - find_low_density_regions: bool, a flag indicating whether to find the low density regions (optional)
         """
 
         self.NUM_BUCKETS = args["num_buckets"]
@@ -37,7 +38,7 @@ class Clustering:
 
         Parameters
         ----------
-        data
+        data : np.ndarray
             The data to be clustered.
 
         Returns
