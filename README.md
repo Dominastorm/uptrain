@@ -45,22 +45,7 @@
   </a>
 </h4>
 
-https://user-images.githubusercontent.com/43818888/229681912-a1d9733d-0c41-4be1-83cf-408d5271518e.mp4
-
-
-
-https://user-images.githubusercontent.com/43818888/230903111-cc7a090d-e3cd-4147-afa3-f6c23f0db1f0.mp4
-
-
-
-
-
-https://user-images.githubusercontent.com/43818888/230904060-874839d3-f0e4-4d45-9724-6cc2b2f69f83.mp4
-
-
-
 https://user-images.githubusercontent.com/43818888/230905127-be148391-3b82-4886-b447-cba042faa501.mp4
-
 
 
 **Read this in other languages**: 
