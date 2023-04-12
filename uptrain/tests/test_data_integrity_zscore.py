@@ -56,7 +56,7 @@ def test_data_integrity_zscore():
     exam_scores = np.concatenate((exam_scores, outliers))
 
     # Shuffle the scores
-    # random_state.shuffle(exam_scores)
+    random_state.shuffle(exam_scores)
 
     # plot_graph(exam_scores)
 
