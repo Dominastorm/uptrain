@@ -84,38 +84,38 @@ if data is None:
 # Apply filters
 # credits - https://github.com/tylerjrichards/st-filter-dataframe/blob/main/streamlit_app.py
 # Also, refer - https://pola-rs.github.io/polars/py-polars/html/reference/datatypes.html
-with st.sidebar:
-    for col_name in plot_op.filter_on:
-        dtype = data.schema[col_name]
+# with st.sidebar:
+for col_name in plot_op.filter_on:
+    dtype = data.schema[col_name]
 
-        if dtype == pl.Categorical or data[col_name].n_unique() < 10:
-            options = data[col_name].unique().to_list()
-            select = st.multiselect(
-                label=f"Filter on {col_name}", options=options, default=options[0]
-            )
-            data = data.filter(pl.col(col_name).is_in(select))
-        elif dtype in pl.NUMERIC_DTYPES:
-            min_val = float(data[col_name].min())
-            max_val = float(data[col_name].max())
-            step = (max_val - min_val) / 100
-            select = st.slider(
-                label=f"Filter on {col_name}",
-                min_value=min_val,
-                max_value=max_val,
-                value=(min_val, max_val),
-            )
+    if dtype == pl.Categorical or data[col_name].n_unique() < 10:
+        options = data[col_name].unique().to_list()
+        select = st.multiselect(
+            label=f"Filter on {col_name}", options=options, default=options[0]
+        )
+        data = data.filter(pl.col(col_name).is_in(select))
+    elif dtype in pl.NUMERIC_DTYPES:
+        min_val = float(data[col_name].min())
+        max_val = float(data[col_name].max())
+        step = (max_val - min_val) / 100
+        select = st.slider(
+            label=f"Filter on {col_name}",
+            min_value=min_val,
+            max_value=max_val,
+            value=(min_val, max_val),
+        )
+        data = data.filter(pl.col(col_name).is_between(select[0], select[1]))
+    elif dtype == pl.Date or dtype in pl.DATETIME_DTYPES:
+        select = st.date_input(
+            label=f"Filter on {col_name}",
+            value=(data[col_name].min(), data[col_name].max()),
+        )
+        if len(select) == 2:
             data = data.filter(pl.col(col_name).is_between(select[0], select[1]))
-        elif dtype == pl.Date or dtype in pl.DATETIME_DTYPES:
-            select = st.date_input(
-                label=f"Filter on {col_name}",
-                value=(data[col_name].min(), data[col_name].max()),
-            )
-            if len(select) == 2:
-                data = data.filter(pl.col(col_name).is_between(select[0], select[1]))
-        else:
-            # TODO: won't this fail for non-str types?
-            select = st.text_input(label=f"Substring or regex in {col_name}")
-            data = data.filter(pl.col(col_name).str.contains(select))
+    else:
+        # TODO: won't this fail for non-str types?
+        select = st.text_input(label=f"Substring or regex in {col_name}")
+        data = data.filter(pl.col(col_name).str.contains(select))
 
 
 # Plot the data
